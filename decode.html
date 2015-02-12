@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ValentineCode</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+	<!--link rel="stylesheet/less" href="less/bootstrap.less" type="text/css" /-->
+	<!--link rel="stylesheet/less" href="less/responsive.less" type="text/css" /-->
+	<!--script src="js/less-1.3.3.min.js"></script-->
+	<!--append ‘#!watch’ to the browser URL, then refresh the page. -->
+	
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+  <![endif]-->
+
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
+  <link rel="shortcut icon" href="img/favicon.png">
+  
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="./filters.js"></script>
+	<script type="text/javascript"> $('#myModal').modal(options) </script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://getbootstrap.com/examples/navbar-fixed-top/#">ValentineCode</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+
+          <ul class="nav navbar-nav navbar-right">
+          
+
+            <li><a href="#" class="btn-success" data-id="page-top" data-toggle="modal" data-target="#myModal"><font color="white">แรงบันดาลใจ</font></a></li>
+
+          </ul>
+
+
+        </div>
+      </div>
+    </nav>
+
+
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="page-header">
+				<center>
+						<h1>
+							<br>
+							HiddenYourSecret UnderPicture
+						</h1>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="row clearfix">
+	<br>
+
+
+		<div class="col-md-6 column">
+			<center>
+				<canvas id="mycanvas"></canvas>
+				<p>
+				<a id="download" href="#" type="button" class="btn btn-success btn-lg" onclick="printClick()" onclick="downloadImage()">Download PNG</a>
+				</p> 
+			</center>
+		</div>
+
+		<div class="col-md-6 column">
+			<div id="SuperPosition">
+
+			</div>
+
+
+
+			<div>
+				<center>
+					<a id="addbtn" href="#" type="button" class="btn btn-success" onclick="addTextForm()">&nbsp;&nbsp;Add&nbsp;&nbsp;</a>
+					<a id="delbtn" href="#" type="button" class="btn btn-success" onclick="delTextForm()">&nbsp;&nbsp;Del&nbsp;&nbsp;</a>
+				</center>
+			</div>
+
+		</div>
+
+
+
+	</div>
+</div>
+
+<script>
+function printClick () {
+	console.log("click button");
+}
+
+</script>
+
+
+<script>
+	var n = 0;
+	var backupData = [];
+	function addTextForm () {
+		backupData = [];
+		for (var i = 1; i <= n; i++) {
+			var data = [];
+			var t = document.getElementById('inputText'+i).value;
+			var x = document.getElementById('inputX'+i).value;
+			var y = document.getElementById('inputY'+i).value;
+			// var a = document.getElementById('inputA'+i).value;
+			var s = document.getElementById('inputS'+i).value;
+			// var c = document.getElementById('inputColor'+i).value;
+			backupData.push([t,x,y,s]);
+		}
+		n++;
+		xString = "<div id=\"SuperText"+n+"\" class=\"form-group\">"
+		+    "<p id=\"placeText"+n+"\">"
+		+    	"<input id=\"inputText"+n+"\" type=\"email\" class=\"form-control\" placeholder=\"Input Something...\" onkeyup=\"valueUpdate(this.id)\">"
+		+    "</p>"
+		+    "<p id=\"placeStyle"+n+"\">"
+		+    		"<label>X :</label>"
+		+	    	"<input id=\"inputX"+n+"\" type=\"range\" min=\"0\" max=\"100\" value=\"50\" style=\"width: 40px;\" id=\"fader\" oninput=\"valueUpdate(this.id)\">"
+		+	    	"<label>&nbsp;&nbsp;</label>"
+		+	    	"<label>Y :</label>"
+		+	    	"<input id=\"inputY"+n+"\" type=\"range\" min=\"0\" max=\"100\" value=\"50\" style=\"width: 45px;\" id=\"fader\" oninput=\"valueUpdate(this.id)\">"
+		+	    	"<label>&nbsp;&nbsp;</label>"
+
+
+		+	    	"<label>S :</label>"
+		+	    	"<input id=\"inputS"+n+"\" type=\"range\" min=\"0\" max=\"100\" value=\"50\" style=\"width: 45px;\" id=\"fader\" oninput=\"valueUpdate(this.id)\">"
+		+	    	"<label>&nbsp;&nbsp;</label>"
+
+		// +	    	"<label>A :</label>"
+		// +	    	"<input id=\"inputA"+n+"\" type=\"range\" min=\"0\" max=\"100\" value=\"50\" style=\"width: 45px;\" id=\"fader\" oninput=\"valueUpdate(this.id)\">"
+		// +	    	"<label>&nbsp;&nbsp;</label>"
+
+		// +	    	"<input id=\"inputColor"+n+"\" type=\"color\" value=\"#40c744\" style=\"width: 30px;\" oninput=\"valueUpdate(this.id)\"/>"
+		+    "</p>"
+		+   "</div>"
+
+		var pos = document.getElementById('SuperPosition');
+		pos.innerHTML += xString;
+		for (var i = 1; i < n; i++) {
+			try {
+				var index = i - 1;
+				document.getElementById('inputText'+i).value = backupData[index][0];
+				document.getElementById('inputX'+i) = backupData[index][1];
+				document.getElementById('inputY'+i) = backupData[index][2];
+				// document.getElementById('inputA'+i) = backupData[index][3];
+				document.getElementById('inputS'+i) = backupData[index][3];
+				// document.getElementById('inputColor'+i) = backupData[index][5];
+			}
+			catch (err) {
+				
+			}
+		}
+	}
+
+	// addTextForm();
+	// addTextForm();
+</script>
+
+<script>
+function delTextForm() {
+	if (n > 1) {
+		var x = document.getElementById('SuperText'+n);
+		n--;
+		x.parentNode.removeChild(x);
+	}
+}
+</script>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">แรงบันดาลใจ</h4>
+      </div>
+      <div class="modal-body">
+
+		  <center>
+			  <a href="against.splendith.com"><h4>against.splendith.com</h4></a> <br>
+		 <iframe src="http://against.splendith.com" style="width: 480px; height: 600px;"></iframe>
+		 </center>
+      </div>
+      <div class="modal-footer">
+        <a href="#" type="button" class="btn btn-success" data-dismiss="modal">Close</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="http://counter1.allfreecounter.com/private/countertab.js?c=57243b5edfb2a9a3337e39edc3adf5c6"></script>
+
+</body>
+<script>
+var self = this;
+var image = document.createElement("img");
+var canvas = document.getElementById("mycanvas"),
+ct = canvas.getContext("2d");
+image.src = './normal.png';
+function clearObjCanvas () {
+	ct.clearRect(0, 0, canvas.width, canvas.height);
+}
+function drawImageCanvas() {
+	clearObjCanvas();
+ct.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvas.width, canvas.height);
+	console.log('gg');
+}
+
+function render () {
+	
+}
+</script>
+<script>
+var textData = [];
+function valueUpdate (id) {
+	textData = [];
+	for (var i = 1; i <= n; i++) {
+		var data = [];
+		var t = document.getElementById('inputText'+i).value;
+		var x = document.getElementById('inputX'+i).value;
+		var y = document.getElementById('inputY'+i).value;
+		// var a = document.getElementById('inputA'+i).value;
+		var s = document.getElementById('inputS'+i).value;
+		// var c = document.getElementById('inputColor'+i).value;
+		textData.push([t,x,y,s]);
+
+	}
+	renderCanvas();
+}
+
+
+	// function doCanvas() {
+	//     /* draw something */
+	//     ctx.fillStyle = '#f90';
+	    
+	//     ctx.fillRect(0, 0, canvas.width, canvas.height);
+	    // ctx.fillStyle = '#fff';
+	    // ctx.font = '60px sans-serif';
+	    // ctx.fillText('Drag', 10, canvas.height / 2 - 15);
+	//     ctx.font = '26px sans-serif';
+	//     ctx.fillText('Image Here', 15, canvas.height / 2 + 35);
+	// }
+function drawText () {
+	for (var i = 1; i <= n; i++) {
+		try {
+			var index = i - 1;
+			var text = textData[index][0];
+			var xVal = textData[index][1];
+			var yVal = textData[index][2];
+			// var angleVal = (textData[index][3] - 50) * 180 / 50.0;
+			// console.log(angleVal)
+			var sizeVal = textData[index][3];
+			var colorVal = '#000000';
+
+			// ct.fillStyle = '#fff';
+			ct.fillStyle = colorVal;
+		    // ct.font = '120px sans-serif';
+		    // console.log(sizeVal + 20);
+		    ct.font = (parseInt(sizeVal) / 100.0 * (180 - 20) + 20)+'px sans-serif';
+		    
+		    
+
+		    var xPos = canvas.width * xVal / 100;
+		    var yPos = canvas.height * (100 - yVal) / 100;
+
+		    
+		    // ct.rotate(
+		    ct.textAlign="center";
+		    // console.log(text);
+		    ct.fillText(text, xPos, yPos);
+		    // ct.rotate(-angleVal*Math.PI/180);
+		    // ct.translate(-xPos, -yPos);
+		}
+		catch(err) {
+		}
+	}
+}
+function renderCanvas () {
+	drawImageCanvas();
+	drawText();
+}
+</script>
+
+
+<script>
+	(function () {
+		var canvas = document.getElementById("mycanvas"),
+			context = canvas.getContext("2d"),
+			img = document.createElement("img"),
+			mouseDown = false,
+			brushColor = "rgb(0, 0, 0)",
+			hasText = true,
+			clearCanvas = function () {
+				if (hasText) {
+					context.clearRect(0, 0, canvas.width, canvas.height);
+					hasText = false;
+				}
+			};
+			
+		// Adding instructions
+		context.fillText("Drop an image onto the canvas", 240, 200);
+		context.fillText("Click a spot to set as brush color", 240, 220);
+		
+		// Image for loading	
+		img.addEventListener("load", function () {
+			clearCanvas();
+			if (img.width > 480 || img.height > 480) {
+				if (img.width / 480.0 >= img.height / 480.0) {
+					canvas.width = 480;
+					canvas.height = 480.0 * img.height / img.width;
+				}
+				else {
+					canvas.height = 480;
+					canvas.width = 480.0 * img.width / img.height;
+				}
+			}
+			else {
+				canvas.width = img.width;
+				canvas.height = img.height;
+			}
+
+			console.log('Image for loading');
+			self.image = img;
+			// drawImageCanvas();
+			renderCanvas();
+			// context.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
+		}, false);
+		
+		// Detect mousedown
+		// canvas.addEventListener("mousedown", function (evt) {
+		// 	clearCanvas();
+		// 	mouseDown = true;
+		// 	context.beginPath();
+		// 	console.log('Detect mousedown');
+		// }, false);
+		
+		// Detect mouseup
+		// canvas.addEventListener("mouseup", function (evt) {
+		// 	mouseDown = false;
+		// 	var colors = context.getImageData(evt.layerX, evt.layerY, 1, 1).data;
+		// 	brushColor = "rgb(" + colors[0] + ", " + colors[1] + ", " + colors[2] + ")";
+		// 	console.log('Detect mouseup');
+		// }, false);
+		
+		// Draw, if mouse button is pressed
+		canvas.addEventListener("mousemove", function (evt) {
+			if (mouseDown) {
+				context.strokeStyle = brushColor;								
+				context.lineWidth = 20;
+				context.lineJoin = "round";
+				context.lineTo(evt.layerX+1, evt.layerY+1);
+				context.stroke();
+				console.log('Draw, if mouse button is pressed');
+			}
+		}, false);
+
+		// To enable drag and drop
+		canvas.addEventListener("dragover", function (evt) {
+			evt.preventDefault();
+		}, false);
+
+		// Handle dropped image file - only Firefox and Google Chrome
+		canvas.addEventListener("drop", function (evt) {
+			var files = evt.dataTransfer.files;
+			if (files.length > 0) {
+				var file = files[0];
+				if (typeof FileReader !== "undefined" && file.type.indexOf("image") != -1) {
+					var reader = new FileReader();
+					// Note: addEventListener doesn't work in Google Chrome for this event
+					reader.onload = function (evt) {
+						img.src = evt.target.result;
+					};
+					reader.readAsDataURL(file);
+				}
+			}
+			evt.preventDefault();
+		}, false);
+	})();
+</script>
+
+
+
+
+<script>
+	var canvas = document.getElementById('mycanvas'),
+	ctx = canvas.getContext('2d');
+	 canvas.height = 500;
+	 canvas.width = 397;
+
+	function doCanvas() {
+	    /* draw something */
+	    //ctx.fillStyle = '#f90';
+	    
+	    ctx.fillRect(0, 0, canvas.width, canvas.height);
+		eiei = document.createElement('img');
+		eiei.src = './robot_ku.png';
+		setTimeout(function() {
+			ctx.drawImage(eiei, 0, 0, canvas.width, canvas.height);
+		},1000);
+		//canvas.height = 480;
+		//canvas.width = 480;
+	    //ctx.fillStyle = '#fff';
+	    //ctx.font = '60px sans-serif';
+	    //ctx.fillText('Drag', 10, canvas.height / 2 - 15);
+	    //ctx.font = '26px sans-serif';
+	    //ctx.fillText('Image Here', 15, canvas.height / 2 + 35);
+	}
+
+	function downloadCanvas(link, canvasId, filename) {
+	    // link.href = document.getElementById(canvasId).toDataURL();
+	    // link.download = filename;
+	    var textCanvas = document.createElement('canvas'); // use textCanvas // don't forgot rgb scale
+	    textCanvas.width = image.width;
+	    textCanvas.height = image.height;
+	    var textContext = textCanvas.getContext("2d");
+
+	    	textContext.rect(0, 0, textCanvas.width, textCanvas.height);
+			textContext.fillStyle = "#444444";
+			textContext.fill();
+	    for (var i = 1; i <= n; i++) {
+		try {
+			   // context.fill()
+			var index = i - 1;
+			var text = textData[index][0];
+			var xVal = textData[index][1];
+			var yVal = textData[index][2];
+			// var angleVal = (textData[index][3] - 50) * 180 / 50.0;
+			// console.log(angleVal)
+			var sizeVal = textData[index][3];
+			var colorVal = '#BBBBBB';
+
+			// ct.fillStyle = '#fff';
+			textContext.fillStyle = colorVal;
+		    // ct.font = '120px sans-serif';
+		    // console.log(sizeVal + 20);
+		    textContext.font = (parseInt(sizeVal) / 100.0 * (180 - 20) + 20)+'px sans-serif';
+		    
+		    
+
+		    var xPos = image.width * xVal / 100;
+		    var yPos = image.height * (100 - yVal) / 100;
+
+		    
+		    // ct.rotate(
+		    textContext.textAlign="center";
+		    // console.log(text);
+		    textContext.fillText(text, xPos, yPos);
+
+		    // ct.rotate(-angleVal*Math.PI/180);
+		    // ct.translate(-xPos, -yPos);
+		}
+		catch(err) {
+		}
+
+		//TEST Code
+
+
+			var dummyCanvas = document.createElement('canvas');
+			dummyCanvas.width = image.width;
+			dummyCanvas.height = image.height;
+			var dummyContext = dummyCanvas.getContext('2d');
+			dummyContext.drawImage(image, 0, 0, image.width, image.height, 0, 0, image.width, image.height);
+
+			var pixelsCode = textContext.getImageData(0,0,textCanvas.width,textCanvas.height);
+			var pixelsImg = dummyContext.getImageData(0,0,dummyCanvas.width,dummyCanvas.height);
+			// var imageData = createImageData(pixelsImg.width, pixelsImg.height);
+			// var codeData = createImageData(pixelsCode.width, pixelsCode.height);
+			// var output = createImageData(pixelsImg.width, pixelsImg.height);
+			// var dst = output.data;
+			var d = pixelsImg.data;
+			// console.log(d.data);
+			var e = pixelsCode.data;
+			for (var i=0; i<d.length; i+=4) {
+				var v = pixelsImg.data[i]%4 + pixelsImg.data[i+1]%8*4 + pixelsImg.data[i+2]%8*32;
+				pixelsImg.data[i] = pixelsImg.data[i+1] = pixelsImg.data[i+2] = v;
+			}
+		    //TEST Code
+
+		 // var dummyCanvas = document.createElement('canvas');
+		 // pixelsImg.data = d.data;
+		 var downloadResultCanvas = document.createElement('canvas');
+		 downloadResultCanvas.width = image.width;
+		 downloadResultCanvas.height = image.height;
+		 var downloadResultContext = downloadResultCanvas.getContext('2d');
+		downloadResultContext.putImageData(pixelsImg,0,0);
+	    link.href = downloadResultCanvas.toDataURL();
+	    link.download = filename;
+	}
+}
+
+	document.getElementById('download').addEventListener('click', function() {
+		var textCanvas = document.createElement('canvas');
+
+	    downloadCanvas(this, 'mycanvas', 'test.png');
+	}, false);
+
+	doCanvas();
+
+	//drawImageCanvas();
+</script>
+</html>
