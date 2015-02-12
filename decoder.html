@@ -93,7 +93,7 @@
 				<p>
 				
 				<!-- <a id="download" href="#" type="button" class="btn btn-success btn-lg" onclick="decode()">Decode</a> -->
-				<a id="download" href="#" type="button" class="btn btn-success btn-lg" onclick="downloadImage()">Download PNG</a>
+				<a id="download" href="#" type="button" class="btn btn-success btn-lg">Download PNG</a>
 				</p> 
 			</center>
 		</div>
@@ -160,23 +160,14 @@ function render () {
 var textData = [];
 function valueUpdate (id) {
 	textData = [];
-	for (var i = 1; i <= n; i++) {
-		var data = [];
-		var t = document.getElementById('inputText'+i).value;
-		var x = document.getElementById('inputX'+i).value;
-		var y = document.getElementById('inputY'+i).value;
-		// var a = document.getElementById('inputA'+i).value;
-		var s = document.getElementById('inputS'+i).value;
-		// var c = document.getElementById('inputColor'+i).value;
-		textData.push([t,x,y,s]);
 
-	}
+	
 	renderCanvas();
 }
 
 function renderCanvas () {
 	drawImageCanvas();
-	drawText();
+	// drawText();
 }
 </script>
 
@@ -294,24 +285,7 @@ function renderCanvas () {
 	    	textContext.rect(0, 0, textCanvas.width, textCanvas.height);
 			textContext.fillStyle = "#444444";
 			textContext.fill();
-	    for (var i = 1; i <= n; i++) {
-		try {
-			   // context.fill()
-			var index = i - 1;
-			var text = textData[index][0];
-			var xVal = textData[index][1];
-			var yVal = textData[index][2];
-			var sizeVal = textData[index][3];
-			var colorVal = '#BBBBBB';
-			textContext.fillStyle = colorVal;
-		    textContext.font = (parseInt(sizeVal) / 100.0 * (180 - 20) + 20)+'px sans-serif';
-			 var xPos = image.width * xVal / 100;
-		    var yPos = image.height * (100 - yVal) / 100;
-		    textContext.textAlign="center";
-		    textContext.fillText(text, xPos, yPos);
-		}
-		catch(err) {
-		}
+	    
 
 		//TEST Code
 
@@ -337,7 +311,7 @@ function renderCanvas () {
 			downloadResultContext.putImageData(pixelsImg,0,0);
 			link.href = downloadResultCanvas.toDataURL();
 			link.download = filename;
-	}
+	
 }
 
 	document.getElementById('download').addEventListener('click', function() {
